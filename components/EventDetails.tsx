@@ -1,12 +1,12 @@
-import React from "react";
 import { notFound } from "next/navigation";
 import { IEvent } from "@/database";
-// import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
+import { getSimilarEventsBySlug } from "@/lib/actions/event.actions";
 import Image from "next/image";
 
 import EventCard from "@/components/EventCard";
 import { cacheLife } from "next/cache";
 import BookEvent from "./BookEvent";
+import { get } from "http";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -93,7 +93,8 @@ const EventDetails = async ({ params }: { params: Promise<string> }) => {
 
   const bookings = 0;
 
-  const similarEvents: IEvent[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const similarEvents: any[] = await getSimilarEventsBySlug(slug);
 
   return (
     <section id="event">
