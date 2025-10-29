@@ -1,7 +1,7 @@
 import EventCard from "@/components/EventCard";
 import ExploreBtn from "@/components/ExploreBtn";
 import { IEvent } from "@/database";
-import events from "@/lib/constants";
+
 import { cacheLife } from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
@@ -9,8 +9,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const Page = async () => {
   "use cache";
   cacheLife("hours"); // Cache the page for 60 seconds
-  // const response = await fetch(`${BASE_URL}/api/events`);
-  // const { events } = await response.json();
+  const response = await fetch(`${BASE_URL}/api/events`);
+  const { events } = await response.json();
 
   return (
     <section>
@@ -30,7 +30,7 @@ const Page = async () => {
           {events &&
             events.length > 0 &&
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            events.map((event: any) => (
+            events.map((event: IEvent) => (
               <li key={event.title} className="list-none">
                 <EventCard {...event} />
               </li>
